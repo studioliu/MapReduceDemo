@@ -1,4 +1,4 @@
-package pers.studio.mapreduce.wordcount;
+package com.studio.mapreduce.project;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -13,7 +13,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
 
-public class Test {
+public class WordCountTest {
     static final class WCMapper extends Mapper<LongWritable, Text, Text, IntWritable> {
         private Text outK = new Text();
         private IntWritable outV = new IntWritable(1);
@@ -50,7 +50,7 @@ public class Test {
         Job job = Job.getInstance(conf);
 
         // 2 设置jar包路径
-        job.setJarByClass(Test.class);
+        job.setJarByClass(WordCountTest.class);
 
         // 3 关联mapper和reducer
         job.setMapperClass(WCMapper.class);
@@ -65,8 +65,8 @@ public class Test {
         job.setOutputValueClass(IntWritable.class);
 
         // 6 设置输入路径和输出路径
-        FileInputFormat.setInputPaths(job, new Path("E:\\input\\words.txt"));
-        FileOutputFormat.setOutputPath(job, new Path("E:\\output"));
+        FileInputFormat.setInputPaths(job, new Path("datas/input/words.txt"));
+        FileOutputFormat.setOutputPath(job, new Path("datas/output"));
 
         // 7 提交job
         boolean result = job.waitForCompletion(true);
